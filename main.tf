@@ -4,7 +4,7 @@ terraform {
 
   backend "s3" {
     bucket = "skyscraperstest-terraform"
-    key    = "terraform-env/main2"
+    key    = "terraform-env/main"
     region = "eu-west-1"
     lock_table = "terraform"
 

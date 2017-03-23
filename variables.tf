@@ -8,22 +8,7 @@ variable "project" {
   default = "test2"
 }
 
-variable "cidr_block" {
-  type = "map"
-  default = {
-    staging = "10.201.0.0/16"
-    default = "10.202.0.0/16"
-  }
-}
 variable "port_number" {
   type = "list"
   default = ["80","443","8080"]
-}
-
-variable "sg_count" {
-  type = "map"
-  default = {
-    staging = "3"
-    default = "2"
-  }
 }
