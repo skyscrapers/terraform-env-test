@@ -5,9 +5,25 @@ variable "aws_region" {
 
 variable "project" {
   description = "The project name"
-  default = "test"
+  default = "test2"
 }
 
 variable "cidr_block" {
-  default = "10.200.0.0/16"
+  type = "map"
+  default = {
+    staging = "10.201.0.0/16"
+    default = "10.202.0.0/16"
+  }
+}
+variable "port_number" {
+  type = "list"
+  default = ["80","443","8080"]
+}
+
+variable "sg_count" {
+  type = "map"
+  default = {
+    staging = "3"
+    default = "2"
+  }
 }

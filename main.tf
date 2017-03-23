@@ -4,9 +4,10 @@ terraform {
 
   backend "s3" {
     bucket = "skyscraperstest-terraform"
-    key    = "terraform-env/main"
+    key    = "terraform-env/main2"
     region = "eu-west-1"
     lock_table = "terraform"
+
   }
 }
 
@@ -16,7 +17,7 @@ provider "aws" {
 
 module "vpc" {
   source      = "github.com/skyscrapers/terraform-network//vpc?ref=dee7d31c9d2b7fe58d60fd6c9160ca5e426463f"
-  cidr_block  = "${var.cidr_block}"
+  cidr_block  = "${var.cidr_block["${terraform.env}"]}"
   project     = "${var.project}"
   environment = "${terraform.env}"
 }
@@ -45,4 +46,15 @@ module "bastion" {
   ssh_key_name  = "mattias"
   ami           = "ami-70edb016"
   instance_type = "t2.micro"
+}
+
+# Allow incoming NRPE check from icinga2 satelite
+resource "aws_security_group_rule" "all_ingress_nrpe" {
+  count                    = "${var.sg_count["${terraform.env}"]}"
+  type                     = "ingress"
+  from_port                = "${var.port_number[count.index]}"
+  to_port                  = "${var.port_number[count.index]}"
+  protocol                 = "tcp"
+  security_group_id        = "${module.general_security_groups.sg_all_id}"
+  source_security_group_id = "${module.bastion.bastion_sg_id}"
 }
