@@ -6,6 +6,7 @@ terraform {
     bucket = "skyscraperstest-terraform"
     key    = "terraform-env/main"
     region = "eu-west-1"
+    lock_table = "terraform"
   }
 }
 
