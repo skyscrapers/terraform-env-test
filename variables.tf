@@ -12,3 +12,11 @@ variable "port_number" {
   type = "list"
   default = ["80","443","8080"]
 }
+
+variable "cidr_block" {
+  description = "CIDR block of the VPC"
+}
+
+variable "sg_count" {
+  description = "SG count"
+}
