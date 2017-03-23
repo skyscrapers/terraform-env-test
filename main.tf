@@ -17,7 +17,7 @@ provider "aws" {
 
 module "vpc" {
   source      = "github.com/skyscrapers/terraform-network//vpc?ref=dee7d31c9d2b7fe58d60fd6c9160ca5e426463f"
-  cidr_block  = "${var.cidr_block["${terraform.env}"]}"
+  cidr_block  = "${var.cidr_block}"
   project     = "${var.project}"
   environment = "${terraform.env}"
 }
@@ -50,7 +50,7 @@ module "bastion" {
 
 # Allow incoming NRPE check from icinga2 satelite
 resource "aws_security_group_rule" "all_ingress_nrpe" {
-  count                    = "${var.sg_count["${terraform.env}"]}"
+  count                    = "${var.sg_count}"
   type                     = "ingress"
   from_port                = "${var.port_number[count.index]}"
   to_port                  = "${var.port_number[count.index]}"
